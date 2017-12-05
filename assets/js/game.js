@@ -1,4 +1,5 @@
-var attemptsLeft = 25;
+var attemptsLeft = 6;
+var missedCount = 0;
 var gamesWon = 0;
 var gamesLost = 0;
 var wordToGuess = "";
@@ -41,6 +42,11 @@ function letterGuess(letterGuessed) {
 			console.log("Nope");
 		}
 	}
+	if (positionsGuessed.length < 1) {
+		attemptsLeft--;	
+		missedCount++;
+		updateImgSrc("gameImage", "assets/images/image" + missedCount + ".jpg");	
+	}
 	updateGame(letterGuessed, positionsGuessed);
 }
 
@@ -49,17 +55,19 @@ function updateGame(letterGuessed, positionsGuessed) {
 		displayWord[positionsGuessed[i]] = letterGuessed;
 	}
 	updateElement("wordToGuess", displayWord.join(" "));
-	/*updateElement("wordToGuess", "");
-	for (var i = 0; i < displayWord.length; i++) {
-		updatePersistentElement("wordToGuess", displayWord[i] + " ");
-	}*/
 	updatePersistentElement("lettersGuessed", " " + letterGuessed);
-	attemptsLeft--;
 	updateElement("attemptsLeft", attemptsLeft);
-	updateInputValue("userInput", "");
-	updateElement("gamesWon", gamesWon);
-	updateElement("gamesLost", gamesLost);
-	checkForWin();
+	if (attemptsLeft == 0) {
+		playSound("lose.mp3");
+		gamesLost++;
+		updateInputValue("userInput", "");
+		resetGame();
+	} else {
+		updateInputValue("userInput", "");
+		updateElement("gamesWon", gamesWon);
+		updateElement("gamesLost", gamesLost);
+		checkForWin();
+	}
 }
 
 function checkForWin() {
@@ -72,6 +80,7 @@ function checkForWin() {
 	if (wordCount == 0) {
 		gameWon = true;
 		gamesWon++;
+		playSound("gong.mp3");
 		updateElement("gamesWon", gamesWon);
 		resetGame();		
 	}
@@ -80,29 +89,29 @@ function checkForWin() {
 function resetGame() {
 	gameStarted = true;
 	updateElement("lettersGuessed", "");
-	attemptsLeft = 25;
+	attemptsLeft = 6;
 	updateElement("attemptsLeft", attemptsLeft);
 	updateElement("userInput", "");
 	updateElement("wordToGuess", "");
+	updateElement("gamesLost", gamesLost);
+	updateImgSrc("gameImage", "assets/images/imageStart.jpg");
+	document.getElementById("instructions").style.color = "#000000";
+	document.getElementById("instructions").style.fontWeight = "normal";
+	missedCount = 0;
 	displayWord = [];
 	getNewWord();
 }
 
 function verifyUserInput(event) {
-	if (attemptsLeft == 0) {
-		gamesLost++;
-		resetGame();
+	var letterToUpper = document.getElementById("userInput").value.toUpperCase();
+	if (event.keyCode >= 0 && event.keyCode <= 57) {
+		updateElement("error", "You did not type a letter Please Try Again");
+	} else if (event.keyCode >= 65 && event.keyCode <= 90) {
+	    letterGuess(letterToUpper);
+	} else if (event.keyCode >= 97 && event.keyCode <= 122) {
+	    letterGuess(letterToUpper);
 	} else {
-		var letterToUpper = document.getElementById("userInput").value.toUpperCase();
-		if (event.keyCode >= 0 && event.keyCode <= 57) {
-			updateElement("error", "You did not type a letter Please Try Again");
-		} else if (event.keyCode >= 65 && event.keyCode <= 90) {
-		    letterGuess(letterToUpper);
-		} else if (event.keyCode >= 97 && event.keyCode <= 122) {
-		    letterGuess(letterToUpper);
-		} else {
-			updateElement("error", "You did not type a letter Please Try Again");
-		}
+		updateElement("error", "You did not type a letter Please Try Again");
 	}
 }
 
@@ -119,4 +128,14 @@ function updatePersistentElement(element, value) {
 function updateInputValue(id, value) {
 	var targetDiv = document.getElementById(id);
 	targetDiv.value = value;
+}
+
+function playSound(file) {
+	var audio = new Audio("assets/sounds/" + file);
+	audio.play();
+}
+
+function updateImgSrc(id, value) {
+	var targetImg = document.getElementById(id);
+	targetImg.src = value;
 }

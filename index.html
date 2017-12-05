@@ -16,11 +16,20 @@
         </header>
         <div class="jumbotron">
         	<div class="row">
-	        	<div id="instructions" class="display3 col-12">
+        		<h1 class="col-12 text-center">
+    				Hangman
+    			</h1>
+    			<div class="col-12 text-center">
+    				<img src="assets/images/imageStart.jpg" id="gameImage" alt="Hangman">
+    			</div>
+	        	<div id="instructions" class="display3 col-12 text-center">
 	        		Press Any Key to Begin The Game!
 	        	</div>
-	        	<div id="wordToGuess" class="col-12">
+	        	<div id="wordToGuess" class="col-6">
 	        		
+	        	</div>
+	        	<div class="col-6">
+	        		<input type="text" id="userInput" size="3px" maxlength="1" onkeyup="verifyUserInput(event)">&nbsp;Enter A Letter Here
 	        	</div>
 	        	<div id="error" class="col-12">
 	        	</div>
@@ -40,9 +49,6 @@
 	            <div id="gamesLost" class="col-6">
 	        		0
 	        	</div>
-	        	<div class="col-12">
-	        		<input type="text" id="userInput" maxlength="1" onkeyup="verifyUserInput(event)">
-	        	</div>
 	        </div>
         </div>
         <footer class="footer">
@@ -53,6 +59,7 @@
 
 		addEventListener("keyup", function(event) {
 		if (gameStarted === false) {
+			playSound("bell.mp3");
 			resetGame();	
 		} /*else {
 			verifyUserInput(event);
