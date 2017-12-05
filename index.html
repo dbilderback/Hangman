@@ -1,0 +1,70 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hangman</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+    <script src="assets/js/game.js"></script>
+</head>
+
+<body>
+    <div class="pageContainer">
+        <header>
+        	  
+        </header>
+        <div class="jumbotron">
+        	<div class="row">
+	        	<div id="instructions" class="display3 col-12">
+	        		Press Any Key to Begin The Game!
+	        	</div>
+	        	<div id="wordToGuess" class="col-12">
+	        		
+	        	</div>
+	        	<div id="error" class="col-12">
+	        	</div>
+	        	<div class="col-6">Letters Already Guessed:&nbsp;</div>
+	        	<div id="lettersGuessed" class="col-6">
+	        	None Yet
+	        	</div>	
+	        	<div class="col-6">Turns Left:&nbsp;</div>
+	        	<div id="attemptsLeft" class="col-6">
+	        	Start The Game First"
+	        	</div>
+	        	<div class="col-6">Games Won:&nbsp;</div>
+	        	<div id="gamesWon" class="col-6">
+	        		0
+	        	</div>
+	        	<div class="col-6">Games Lost:&nbsp;</div>
+	            <div id="gamesLost" class="col-6">
+	        		0
+	        	</div>
+	        	<div class="col-12">
+	        		<input type="text" id="userInput" maxlength="1" onkeyup="verifyUserInput(event)">
+	        	</div>
+	        </div>
+        </div>
+        <footer class="footer">
+        </footer>
+    </div>
+    <script type="text/javascript">
+		var gameStarted = false;
+
+		addEventListener("keyup", function(event) {
+		if (gameStarted === false) {
+			resetGame();	
+		} /*else {
+			verifyUserInput(event);
+		}*/
+		
+
+		});
+	    
+	</script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+
+</html>
